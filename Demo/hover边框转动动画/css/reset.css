@@ -1,0 +1,50 @@
+html,body,h1,h2,h3,h4,h5,h6,hr,p,dl,dt,dd,ul,ol,li,button,input,textarea,th,td{
+    margin: 0;
+    padding: 0;
+}
+body,button, input, select, textarea{
+    font-family: "微软雅黑";
+    color: #333;
+    font-size: 14px;
+}
+body{
+    background:#fff;
+}
+h1{
+    font-size: 20px; 
+}
+h2{
+    font-size: 18px;
+}
+h3{
+    font-size: 16px;
+}
+h4,h5,h6{
+    font-size: 100%; 
+}
+ul,ol{ 
+    list-style: none; 
+}
+a{
+    text-decoration: none;
+}
+a,button{
+    cursor:pointer;
+}
+button,input,select,textarea{
+    font-size: 100%; /* 使得表单元素在 ie下能继承字体大小 */
+    outline: none;
+}
+/* 重置表格元素 */
+table{
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+/* 让非ie浏览器默认也显示垂直滚动条，防止因滚动条引起的闪烁 */
+html{
+    overflow-y: scroll;
+}
+/*去除自动填充表单黄色背景 */
+input:-webkit-autofill {
+-webkit-box-shadow: 0 0 0px 1000px white inset;
+}

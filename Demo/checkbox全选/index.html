@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="renderer" content="webkit">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>index</title>
+        <link rel="stylesheet" href="css/reset.css">
+    </head>
+    <body>
+        <input id="j-cheall" type="checkbox" /><span>全选</span><br />
+        <input type="checkbox" name="fruit"/><span>苹果</span>
+        <input type="checkbox"  name="fruit"/><span>西瓜</span>
+        <input type="checkbox"  name="fruit"/><span>葡萄</span>
+        <script>
+            var fruit=document.getElementsByName("fruit");
+            var btnAll=document.getElementById("j-cheall");
+            btnAll.onclick=function(){
+                for(var i=0;i<fruit.length;i++){
+                    fruit[i].checked=btnAll.checked;
+                }
+            }
+            for(var i=0;i<fruit.length;i++){
+                fruit[i].onclick=function(){
+                    btnAll.checked=true;
+                    for(var j=0;j<fruit.length;j++){
+                        if(!fruit[j].checked){
+                            btnAll.checked=false;
+                        }
+                    }
+                    
+                }
+            }
+            
+        </script>
+    </body>
+</html>

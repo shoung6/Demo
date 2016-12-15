@@ -1,0 +1,33 @@
+另一种场景，一些标题性文字，希望随着屏幕宽而增大的，我们可以仍然使用rem作为单位。超过35px（个人直观感受）的文字，已经不用太考虑点阵信息了，靠字体的矢量信息也能渲染的很好。
+
+图片用px
+
+再一次最后，附上自己遇到的一些关于css布局适配问题：
+1.盒子，图片等宽度设置首选百分比，次而选择rem，高度可以是固定值
+2.字体可以不用rem，误差太大了，且不能满足任何屏幕下字体大小相同,所以建议标题类用rem，要求字体大小相同的部分还是用px；
+
+3.遇到内容排列显示的布局，建议放弃float，可以直接使用display:inline-block。
+4.慎用position属性；absolute会脱离文档流，relative则不会
+5.如何解决盒子边框溢出？当你把元素宽度设为 width:100%时，有时可能会遇到元素的宽度超出了屏幕，这时可对元素加box-sizing:border-box属性，用来指定盒子大小包含边框和内边距
+6.去除button在ios上的默认样式
+-webkit-appearance: none; border-radius: 0;
+
+7.不想让按钮touch时有蓝色的边框
+outline:none;
+8.去除webkit的滚动条
+element::-webkit-scrollbar{  
+     
+display: none;
+}
+9.遇到过一个问题就是，当手机端点击input弹出键盘，整个视窗的高度就会变为减去键盘的高度，页面底部样式会乱，当时解决方法是用js获取整个页面高度赋值给body，等于说在不同的设备下写死不同的body高度值，底部就不会乱了
+$("body").css("height",parseInt($(".wrap").height())+parseInt($(".icon-main").height()));
+10.如果想改变 placeholder里的文字，需要用c伪类
+::-webkit-input-placeholder{
+   
+color:#ccc
+}
+
+window.onresize = function(){
+    document.documentElement.style.fontSize = ((document.documentElement.clientWidth / 750) * 100) + 'px';
+};
+document.documentElement.style.fontSize = ((document.documentElement.clientWidth / 750) * 100) + 'px';

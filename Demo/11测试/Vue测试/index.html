@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="renderer" content="webkit">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>index</title>
+        <link rel="stylesheet" href="css/reset.css">
+        
+        <style>
+            .nav{overflow: hidden;}
+            .nav li{width: 60px;background-color: #eee;padding: 10px;text-align: center;float: right;cursor: pointer;}
+            .nav li:hover{background-color: #999;color: #fff;}
+            .nav .checked{background-color: #999;color: #fff;}
+            .content{background-color: #efefef;padding: 10px;}
+        </style>
+    </head>
+    <body>
+        <div id="test1">
+            <ul class="nav">
+                <li class="checked" v-on:click="change(1)">水果</li>
+                <li v-on:click="change(2)">蔬菜</li>
+                <li v-on:click="change(3)">恐龙</li>
+                <li v-on:click="change(4)">动物</li>
+            </ul>
+            <div class="content">
+                <ul>
+                    <li v-for="item in items">
+                        {{item.message}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <script src="js/vue.js"></script>
+        <script>
+            var test1=new Vue({
+                el:'#test1',
+                data:{
+                    items:[{message:'香蕉'},{message:'苹果'},{message:'梨'}]
+                },
+                methods:{
+                    getData:function(type){
+                        console.log(type);
+                        if(type==4){
+                            test1.items=[{message:'猴子'},{message:'牛'},{message:'马'},{message:'羊'}];
+                        }else if(type==3){
+                            test1.items=[{message:'霸王龙'},{message:'角龙'},{message:'一龙'}];
+                        }else if(type==2){
+                            test1.items=[{message:'西红柿'},{message:'青菜'},{message:'萝卜'}];
+                        }else if(type==1){
+                            test1.items=[{message:'香蕉'},{message:'苹果'},{message:'梨'}];
+                        }
+                        console.log(test1.items);
+                    },
+                    change:function (temp){
+                        test1.getData(temp);
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>

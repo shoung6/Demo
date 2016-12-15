@@ -1,0 +1,140 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+
+	</head>
+	<script>
+		//rem布局
+		window.onresize = function(){
+			document.documentElement.style.fontSize = ((document.documentElement.clientWidth / 750) * 100) + 'px';
+		};
+		document.documentElement.style.fontSize = ((document.documentElement.clientWidth / 750) * 100) + 'px';
+	</script>
+	<style>
+		/*一像素边框*/
+:before{position: absolute;right: 0;bottom: 0;left: 0;height: 1px;content:'';-webkit-transform: scaleY(.5);transform: scaleY(.5);background-color: #111;}
+		/*省略号*/
+   				white-space: nowrap;/*强制不换行*/
+				overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 3;-webkit-box-orient: vertical;/*多行显示省略号*/
+		/*图片包围*/
+		position: relative;width: 100%;padding-bottom: 50%;		
+		position:absolute;top:50%;left:50%;display:block;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%);max-height: 100%;max-width: 100%;
+		
+	</style>
+
+	<body>
+		<script src="../js/app.js"></script>
+		<script type="text/javascript">
+		(function($, doc) {
+		}(mui, document))
+			mui.init()
+				//ajax
+				var json_obj={"Photo":imageData};
+				app.ajax({
+					url:'App/User/user_edit',
+					data:json_obj,
+					callback:function(data){
+						console.log(JSON.stringify(data));
+						mui.toast("");
+					},errorback:function(a){
+					}
+				});
+				//触发别页面js
+				window.addEventListener('init', function() {
+					page_init();
+				})
+				var user_index=plus.webview.getWebviewById("user_index.html");
+				mui.fire(user_index,"init");
+				//页面传值
+				extras:{'group_id':group_id},
+				var this_page=plus.webview.currentWebview();
+				console.log(this_page.group_id);
+				//等待框
+				var waiting=plus.nativeUI.showWaiting("加载中");
+				plus.nativeUI.closeWaiting(waiting);
+						//小于10条，不显示加载更多
+						if(page_index==1&&data.length<10){
+							mui('.mui-content').pullRefresh().disablePullupToRefresh();
+						}
+			//全屏
+			plus.navigator.setFullscreen(true);
+		//上拉加载	
+		mui.init({
+			pullRefresh : {
+			    container:".mui-content",//待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
+			    up : {
+			    	auto:true,
+			        contentrefresh : "正在加载...",//可选，正在加载状态时，上拉加载控件上显示的标题内容
+			        contentnomore:'没有更多数据了',//可选，请求完毕若没有更多数据时显示的提醒内容；
+			        callback :pullfresh//必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+			    }
+		    }
+		});
+		function page_init(){//初始化
+			document.querySelector(".water-box").innerHTML='';
+			mui('.mui-content').pullRefresh().refresh(true);
+			page_index=1;
+			pullfresh();
+		}
+		window.addEventListener('init', function() {//供后面数据修改之后更新
+			page_init();
+		})
+	    function pullfresh(){
+			//ajax
+			var json_obj={"PageSize":10,"PageIndex":page_index};
+			console.log(JSON.stringify(json_obj));
+			app.ajax({
+				url:'App/User/user_money_record_list',
+				data:json_obj,
+				callback:function(data){
+					console.log(JSON.stringify(data));
+					if (data=="") {
+						mui('.mui-content').pullRefresh().endPullupToRefresh(true);
+					}else{
+						var list_wrap=document.querySelector(".water-box");
+						for (var i=0;i<data.length;i++) {
+							var new_div = document.createElement('div');
+							new_div.innerHTML="\
+							<div class='water-list'>\
+				    			<div class='head'>\
+				    				<span class='left'></span>\
+				    				<span class='right'></span>\
+				    			</div>\
+				    			<div class='fot'>"+data[i].AddTime+"</div>\
+				    		</div>";
+							list_wrap.appendChild(new_div);
+							var list_all=document.querySelectorAll(".water-list");
+							var list_last=list_all[list_all.length-1];
+						}
+	    				page_index++;
+						if (data.length<10) {
+							mui('.mui-content').pullRefresh().endPullupToRefresh(true);
+						}else{
+							mui('.mui-content').pullRefresh().endPullupToRefresh();
+						}
+					}
+				},errorback:function(a){
+					mui('.mui-content').pullRefresh().endPullupToRefresh();
+				}
+			});
+	    }
+						//图片不留白100%
+						if (data.Photo!=="") {
+							head.src=data.Photo;
+							head.onload=function(){
+								if(this.height<this.width){
+									this.style.cssText="position:absolute;top:50%;left:50%;display:block;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%);height: 100%;width:auto;";
+								}else{
+									this.style.cssText="position:absolute;top:50%;left:50%;display:block;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%);width: 100%;height:auto;";
+								}
+							}
+						}
+		安卓的下拉刷新必须要有双webview才能起作用,上拉加载单webview能用但虽然有区域滚动的DOM但是没有效果,ios不加区域滚动的组件会无法加载刷新
+		</script>
+	</body>
+
+</html>

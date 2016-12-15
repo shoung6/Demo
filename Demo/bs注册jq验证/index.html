@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="renderer" content="webkit">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>index</title>
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <style>
+            body {
+                background: #eee;
+            }
+            
+            .btn:focus,
+            .btn:active:focus,
+            .btn.active:focus,
+            .btn.focus,
+            .btn:active.focus,
+            .btn.active.focus {
+                outline: none;
+            }
+            
+            .con {
+                max-width: 600px;
+                margin: 10px auto;
+                padding: 20px;
+            }
+            
+            @media only screen and (max-width: 500px) {
+                .con {
+                    padding: 30px;
+                }
+            }
+            
+            .topnav {
+                margin-bottom: 20px;
+            }
+            
+            .tishi {
+                display: block;
+                color: indianred;
+                margin-top: 4px;
+            }
+            
+            .yzinput {
+                padding-left: 0;
+            }
+        </style>
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.js"></script>
+    <![endif]-->
+    </head>
+
+    <body>
+        <div class="con">
+            <div class="row topnav">
+                <div class="col-xs-4 col-sm-offset-3 col-xs-offset-2">
+                    <button class="btn btn-default btn-block">登&nbsp;陆</button>
+                </div>
+                <div class="col-xs-4">
+                    <button class="btn btn-success btn-block zhucebtn">注&nbsp;册</button>
+                </div>
+            </div>
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="nicheng" class="col-sm-3 control-label">昵称</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="nicheng" placeholder="请输入您的昵称">
+                    </div>
+                    <div class="col-sm-9 col-sm-offset-3 col-xs-12 hidden tip">
+                        <strong class="tishi">请输入3-12位字符</strong>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword1" class="col-sm-3 control-label">密码</label>
+                    <div class="col-sm-9">
+                        <input type="password" class="form-control" id="inputPassword1" placeholder="请输入密码">
+                    </div>
+                    <div class="col-sm-9 col-sm-offset-3 col-xs-12 tip hidden">
+                        <strong class="tishi">请输入8~18位密码</strong>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword2" class="col-sm-3 control-label">确认密码</label>
+                    <div class="col-sm-9">
+                        <input type="password" class="form-control" id="inputPassword2" placeholder="请再次输入密码">
+                    </div>
+                    <div class="col-sm-9 col-sm-offset-3 col-xs-12 tip hidden">
+                        <strong class="tishi">请输入与上面相同密码</strong>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPhone" class="col-sm-3 control-label">手机号</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="inputPhone" placeholder="请输入您的手机号">
+                    </div>
+                    <div class="col-sm-9 col-sm-offset-3 col-xs-12 tip hidden">
+                        <strong class="tishi">请输入11位手机号</strong>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="iptyzm" class="col-sm-3 control-label">验证码</label>
+                    <div class="col-sm-6">
+                        <div class="col-xs-6 yzinput">
+                            <input type="text" class="form-control" id="iptyzm" placeholder="请输入验证码">
+                        </div>
+                        <div class="col-xs-6">
+                            <button class="btn btn-link" id="btnyzm" type="button">获取验证码</button>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-4 col-sm-7">
+                        <button type="submit" class="btn btn-info btn-block" id="send">注册</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery-1.12.3.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <script>
+            $(function() {
+                $("form input").blur(function() {
+                    //验证昵称
+                    if ($(this).is('#nicheng')) {
+                        var $a = $(this).parent().parent();
+                        if (this.value == "" || this.value.length < 3 || this.value.length > 12) {
+                            var $a = $(this).parent().parent();
+                            $a.addClass("has-error");
+                            $a.find(".tip").removeClass("hidden")
+                                .addClass("show");
+                        } else {
+                            $a.removeClass("has-error")
+                                .addClass("has-success");
+                            $a.find(".tip").removeClass("show")
+                                .addClass("hidden");
+                        }
+                    }
+                    //验证密码
+                    if ($(this).is('#inputPassword1')) {
+                        var $a = $(this).parent().parent();
+                        if (this.value == "" || this.value.length < 3 || this.value.length > 12) {
+                            var $a = $(this).parent().parent();
+                            $a.addClass("has-error");
+                            $a.find(".tip").removeClass("hidden")
+                                .addClass("show");
+                        } else {
+                            $a.removeClass("has-error")
+                                .addClass("has-success");
+                            $a.find(".tip").removeClass("show")
+                                .addClass("hidden");
+                        }
+                    }
+                    //验证密码2
+                    if ($(this).is('#inputPassword2')) {
+                        var $a = $(this).parent().parent();
+                        if (this.value == "" ||this.value != $("#inputPassword1").val()) {
+                            $a.addClass("has-error");
+                            $a.find(".tip").removeClass("hidden")
+                                .addClass("show");
+                        } else {
+                            $a.removeClass("has-error")
+                                .addClass("has-success");
+                            $a.find(".tip").removeClass("show")
+                                .addClass("hidden");
+                        }
+                    }
+                    //验证手机号
+                    if ($(this).is('#inputPhone')) {
+                        var $a = $(this).parent().parent();
+                        if (this.value.length!=11) {
+                            $a.addClass("has-error");
+                            $a.find(".tip").removeClass("hidden")
+                                .addClass("show");
+                        } else {
+                            $a.removeClass("has-error")
+                                .addClass("has-success");
+                            $a.find(".tip").removeClass("show")
+                                .addClass("hidden");
+                        }
+                    }
+                })//离开输入框触发函数结束
+                $("#btnyzm").click(function yzmclk(){
+                    var i=6;
+                    function djs(){
+                        if(i>0){
+                            $("#btnyzm").html(i+"秒后可重新获取")
+                                .unbind("click");
+                            i--;
+                            setTimeout(djs,1000);
+                        }
+                        else{
+                            $("#btnyzm").html("获取验证码")
+                                .bind("click",yzmclk);//用yzmclk()不行，会不点击直接执行
+                        }
+                        
+                    }
+                    djs();
+                })//验证码发送结束
+//              $("#btnyzm").click(function(){
+//                  var i=6;
+//                  $(this).attr("disabled", true); 
+//                  function djs(){
+//                      if(i>0){
+//                          $("#btnyzm").html(i+"秒后可重新获取");
+//                          i--;
+//                          setTimeout(djs,1000);
+//                      }
+//                      else{
+//                          $("#btnyzm").removeAttr("disabled")//用this不行
+//                              .html("获取验证码");
+//                      }
+//                      
+//                  }
+//                  djs();
+//              })
+                //验证码发送另一种方法
+
+                //提交，最终验证。
+                $('#send').click(function() {
+                    $("form input").trigger('blur');
+                    var numError = $('form .has-error').length;
+                    if (numError) {
+                        alert("请输入正确内容。");
+                        return false;
+                    }
+                });
+            })
+        </script>
+    </body>
+
+</html>

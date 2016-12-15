@@ -1,0 +1,37 @@
+获取，添加元素要在文档加载完成之后操作（script标签放body后面或者document.ready
+
+        //创建二维数组
+            function multiArray(m,n) {
+                var arr =  new Array(n);
+                for(var i=0; i<m; i++) 
+                    arr[i] = new Array(m);
+                return arr;
+            }
+function $(str) {
+    return document.getElementById(str);
+}
+function $tag(str,target) {
+    target = target || document;
+    return target.getElementsByTagName(str);
+}
+
+b=a.appendChild(c); 把c赋值给b   解释：appendChild方法会返回c对象
+
+在函数中用this指向window对象 在方法中指向调用这个方法的对象
+
+没申明会报错，申明但不说是什么类型会报undefined
+
+var a="hahah";
+alert(a[0]);//能输出h
+
+事件中用到的变量不会被销毁
+
+Js的this实例4代码  收藏代码
+function test(){        
+alert(this.title);  
+}  
+<input  type="button" value="test" onclick="test()" id="test" title="test">  
+ 	运行这段代码页面弹出undefined字样。有人会说，我的input标签里面明明有title属性的值为test的。但是这里为什么会弹出undefined字样呢。其实道理很简单，这里是通过onclick方法调用的。其实onclick="test()"，相当于function onclick(evenet){test();},而function onclick其实也是一个全局的function，上面的 test方法也是全局的function，都可以视为window对象的两个属性。这里其实就是通过这个在onclick方法里面调用这个test方法，其实这里和第一种说法是一样的。
+	
+	通过以上的几个例子，我相信大家都多少理解了js的this指代含义------this指针代表的是执行当前代码的对象的所有者。
+	我希望大家看完这个博客之后，可以自己去测试一下，加深对js的this指代的理解。

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link rel="stylesheet" href="css/bvd.css" />
+	</head>
+
+	<body>
+		<div class="bad-video">
+			<video webkit-playsinline>
+				<source src='xx.mp4' type="video/mp4"></source>
+				<source src='1.webm' type="video/webm"></source>
+				<p>设备不支持</p>
+			</video>
+			
+			<!--<img src="img/play.png" class="vplay" />
+			<div class="controls">
+				<div>
+					<div class="progressBar">
+						<div class="timeBar"></div>
+					</div>
+				</div>
+				<div><span class="current">00:00</span>/<span class="duration">00:00</span></div>
+				<div><span class="fill">全屏</span></div>
+			</div>-->
+		</div>
+		<script src="js/mui.min.js" ></script>
+		<script src="js/bvd.js"></script>
+		<script>
+			var v = mui.bvd();
+		</script>
+		
+	</body>
+
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="renderer" content="webkit">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>index</title>
+        <link rel="stylesheet" href="css/reset.css">
+        <style>
+            body{
+                min-height: 1000px;
+            }
+            .ipt-date,.ipt-date2{
+                display: inline-block;
+                margin:20px 20px 20px 0;
+                width: 100px;
+                height: 26px;
+                line-height: 26px;
+                padding-left: 8px;
+                border: 1px solid #333;
+                border-radius: 3px;
+            }
+            .m-date{
+                border: 1px solid #eee;
+                cursor: default;
+                display: none;
+                position: absolute;
+                width: 170px;
+                padding: 8px;
+                background-color: #fff;
+                border-radius: 2px;
+                box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.14), 0 2px 2px 0 rgba(0, 0, 0, 0.098), 0 1px 5px 0 rgba(0, 0, 0, 0.084);
+                -moz-user-select:none;
+            }
+            .m-date_tbl{
+                width: 100%;
+                text-align: center;
+            }
+            .m-date_tbl td,.m-date_tbl th{
+                height: 24px;
+            }
+            .m-date_tit{
+                text-align: center;
+                margin-bottom: 5px;
+            }
+            .m-date_tit_mar{
+                margin: 0 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <span>生日：</span>
+        <div class="ipt-date j-start">2016-7-4</div>
+        <span>入学日期：</span>
+        <div class="ipt-date2 j-end">2016-7-4</div>
+        <div class="m-date" onselectstart="return false">
+            <div class="m-date_tit">	
+                <span class="m-date_tit_pre-yea">&lt;&lt;</span>
+                <span class="m-date_tit_mar m-date_tit_pre-mon">&lt;</span>
+                <span class="m-date_tit_year"></span>
+                <span>-</span>
+                <span class="m-date_tit_month"></span>
+                <span class="m-date_tit_mar m-date_tit_nex-mon">&gt;</span>
+                <span class="m-date_tit_nex-yea">&gt;&gt;</span>
+            </div>
+            <div>
+                <table class="m-date_tbl">
+                    <tr>
+                        <th>日</th>
+                        <th>一</th>
+                        <th>二</th>
+                        <th>三</th>
+                        <th>四</th>
+                        <th>五</th>
+                        <th>六</th>
+                    </tr>
+                    <tr>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+        <script src="js/jquery-1.12.3.min.js"></script>
+        <script>
+            function DateSel(ipt){
+                    //初始化开始时间为今天时间
+                    var nowYear=parseInt(new Date().getFullYear());
+                    var nowMonth=parseInt(new Date().getMonth());
+                    var iptYear=nowYear;
+                    var iptMonth=nowMonth+1;
+                    var iptDay=parseInt(new Date().getDate());
+                    $(ipt).text(iptYear+"-"+iptMonth+"-"+iptDay);
+                    //点击出现选择框
+                    $(ipt).click(function(){
+                        reTbl(nowYear,nowMonth);
+                        //下个月
+                        $(".m-date_tit_nex-mon").unbind().click(function(){
+                            nowMonth++;
+                            if(nowMonth==12){
+                                nowMonth=0;
+                                nowYear++;
+                            }
+                            reTbl(nowYear,nowMonth);
+                        })
+                        //上个月
+                        $(".m-date_tit_pre-mon").unbind().click(function(){
+                            nowMonth--;
+                            if(nowMonth==-1){
+                                nowMonth=11;
+                                nowYear--;
+                            }
+                            reTbl(nowYear,nowMonth);
+                        })
+                        //下一年
+                        $(".m-date_tit_nex-yea").unbind().click(function(){
+                            nowYear++;
+                            reTbl(nowYear,nowMonth);
+                        })
+                        //上一年
+                        $(".m-date_tit_pre-yea").unbind().click(function(){
+                            nowYear--;
+                            reTbl(nowYear,nowMonth);
+                        })
+                    })
+                    $(ipt).click(function(event){
+                        var iptTop=$(this).offset().top+$(this).height()+3;
+                        var iptLeft=$(this).offset().left;
+                        $(".m-date").css({left:iptLeft,top:iptTop+"px",display:"block"});
+                        event.stopPropagation();
+                    })
+                    //阻止m-date事件冒泡
+                    $(".m-date").click(function(event){
+                        event.stopPropagation();
+                    })
+                    //点击选择框之外的地方关闭
+                    $("body").click(function(){
+                        $(".m-date").hide();
+                    })
+                    //更新表格
+                    function reTbl(newYear,newMonth){
+                        var iptY=iptYear;
+                        var iptM=iptMonth;
+                        var iptD=iptDay;
+                        var newDate=new Date(newYear,newMonth);
+                        var oneWeek=parseInt(newDate.getDay());//这月第一天星期几
+                        console.log(DateSel.nowYear);
+                        var maxDay=new Date(newYear,newMonth+1,0).getDate();//这月最后一天日期
+                        $(".m-date_tbl td").css({backgroundColor:"#fff",color:"#333"});
+                        if(iptY==newYear&&iptM==newMonth+1){
+                            $(".m-date_tbl td").eq(oneWeek+iptD-1).css({backgroundColor:"coral",color:"#fff"});
+                        }
+                        $(".m-date_tbl td").text("").unbind();
+                        for(var i=0;i<maxDay;i++){
+                            $(".m-date_tbl td").eq(oneWeek).text(i+1)//填上日期
+                            //添加悬浮高亮
+                            .hover(function(){
+                                $(this).css({backgroundColor:"coral",color:"#fff"});
+                            },
+                            function(){
+                                if(iptY!==newYear||iptM!==newMonth+1||iptD!==parseInt($(this).text())){
+                                    $(this).css({backgroundColor:"#fff",color:"#333"});
+                                }
+                            })
+                            //点击事件
+                            .click(function(){
+                                iptDay=parseInt($(this).text());
+                                iptYear=nowYear;
+                                iptMonth=nowMonth+1;
+                                $(ipt).text(iptYear+"-"+iptMonth+"-"+iptDay);
+                                $(".m-date").hide();
+                            });
+                            oneWeek++;
+                        }
+                        $(".m-date_tit_year").text(newYear);
+                        newMonth++;
+                        $(".m-date_tit_month").text(newMonth);
+                    }
+            }
+            DateSel(".j-start");
+            DateSel(".j-end");
+        </script>
+    </body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="renderer" content="webkit">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>index</title>
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <link rel="stylesheet" href="css/reset.css">
+        <style>
+            /* 图片居中溢出隐藏  */  
+            .m-demo{position:relative;width:300px;height:300px;overflow:hidden;border:1px solid #ddd;}
+            .m-demo p{position:absolute;top:50%;left:50%;margin:0;padding:0;}
+            .m-demo img{position:absolute;top:-50%;left:-50%;display:block;}
+            .m-demo img.hid{visibility:hidden;position:static;}
+            
+            .m-demo .pp{position:absolute;top:50%;left:50%;margin:0;padding:0;}
+            .m-demo .shi{position:absolute;top:-50%;left:-50%;display:block;width: 100px;height: 100px;border: solid 1px;}
+            .m-demo .hid{visibility:hidden;position:static;}
+        </style>
+        <!--[if lt IE 9]>
+            <script src="js/html5shiv.js"></script>
+            <script src="js/respond.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <div class="m-demo">
+            <div class="pp">
+                <div class="shi">shi</div>
+                <div class="shi hid">shi</div>
+            </div>
+        </div>
+        <div class="m-demo">
+            <p>
+                <img src="http://nec.netease.com/img/m/1.jpg" class="hid"/>
+                <img src="http://nec.netease.com/img/m/1.jpg" alt=""/>
+            </p>
+        </div>
+        <div class="m-demo">
+            <p>
+                <img src="http://nec.netease.com/img/l/1.jpg" class="hid"/>
+                <img src="http://nec.netease.com/img/l/1.jpg" alt=""/>
+            </p>
+        </div>
+
+        <script src="js/jquery-1.12.3.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+    </body>
+</html>

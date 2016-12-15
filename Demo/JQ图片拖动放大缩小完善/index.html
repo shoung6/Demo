@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="renderer" content="webkit">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>index</title>
+        <link rel="stylesheet" href="css/reset.css">
+        <style>
+            .m-bia1{
+                width: 100%;
+                height: 100%;
+                position: fixed;
+                left: 0;
+                top: 0;
+                background-color: rgba(0,0,0,0.1);
+                display: none;
+            }
+            .m-bia2{
+                margin: 0 auto;
+                width: 500px;
+                height: 500px;
+                background-color: rgba(0,0,0,0.3);
+                overflow: hidden;
+                position: relative;
+            }
+            .m-bia3{
+                width: 100px;
+            }
+            .m-bia4{
+                width: 490px;
+            }
+            .m-bia5{
+                font-size: 30px;
+                position: absolute;
+                right: 15px;
+                cursor: pointer;
+                z-index: 10;
+                color: #fff;
+                transform:scaleX(1.3);
+            }
+            .m-bia5:hover{
+                color: crimson;
+            }
+        </style>
+    </head>
+    <body>
+        <img class="m-bia3" src="img/snow.jpg" />
+        <img class="m-bia3" src="img/androiddol.png"/>
+        <p>点击出现大图</p>
+        <p>图片可拖动</p>
+        <p>以鼠标位置为中心放大缩小</p>
+        <div class="m-bia1">
+            <div class="m-bia2">
+                <span class="m-bia5">x</span>
+                <img class="m-bia4" src=""/>
+            </div>
+        </div>
+        <script src="js/jquery-1.12.3.min.js"></script>
+        <script>
+            $(function(){
+                $(".m-bia2").css("marginTop",($(window).height()-500)/2+"px");
+                $(".m-bia3").click(function(event){
+                    $(".m-bia4").attr("src",$(this).attr('src'));
+                    $(".m-bia1").show();
+                    $(".m-bia4").css("marginTop",(500-$(".m-bia4").height())/2+"px");
+                    $(".m-bia4").css("marginLeft",(500-$(".m-bia4").width())/2+"px");
+                })
+                $(".m-bia5").click(function(){
+                    $(".m-bia1").hide();
+                })
+                //放大缩小                    
+                var eve;
+                if (navigator.userAgent.indexOf('Firefox') >= 0) {
+                    eve = "DOMMouseScroll";
+                } else {
+                    eve = "mousewheel";
+                }
+                $(".m-bia2").bind(eve,
+                    function(e) {
+                        var evt = window.event || e;
+                        var newWidth;
+                        var newHeight;
+                        var newLeft;
+                        var newTop;
+                        var imgx= $(".m-bia4").offset().left;
+                        var imgy= $(".m-bia4").offset().top;
+                        var shux=e.pageX;
+                        var shuy=e.pageY;
+                        if (evt.detail > 0 || evt.wheelDelta < 0) {
+                            newWidth = $(".m-bia4").width() * (1 - 0.05);
+                            newHeight = $(".m-bia4").height() * (1 - 0.05);
+                            newLeft = parseInt($(".m-bia4").css("marginLeft")) + (shux-imgx)*0.05;
+                            newTop = parseInt($(".m-bia4").css("marginTop")) +(shuy-imgy)*0.05;
+                        } else {
+                            newWidth = $(".m-bia4").width() * (1 + 0.05);
+                            newHeight = $(".m-bia4").height() * (1 + 0.05);
+                            newLeft = parseInt($(".m-bia4").css("marginLeft")) - (shux-imgx)*0.05;
+                            newTop = parseInt($(".m-bia4").css("marginTop")) - (shuy-imgy)*0.05;
+                        }
+
+                        $(".m-bia4").css({
+                            marginLeft : newLeft + "px",
+                            marginTop : newTop + "px"
+                        });
+                        $(".m-bia4").width(newWidth);
+                        $(".m-bia4").height(newHeight);
+                    }
+                );
+                //拖动
+                    //禁止拖动图片出现新窗口
+                function imgdragstart(){return false;}
+                for(i in document.images)document.images[i].ondragstart=imgdragstart;
+                $(".m-bia2").bind("mousedown", function(e) {
+                    var xo = e.pageX;
+                    var yo = e.pageY;
+                    var imgLeft = parseInt($(".m-bia4").css("marginLeft"));
+                    var imgTop = parseInt($(".m-bia4").css("marginTop"));
+                    $(".m-bia2").bind("mousemove", function(e) {
+                        var xn = e.pageX;
+                        var yn = e.pageY;
+                        $(".m-bia4").css("marginLeft", xn - xo + imgLeft);
+                        $(".m-bia4").css("marginTop", yn - yo + imgTop);
+                    });
+                });
+                $(".m-bia2").bind("mouseup mouseout", function() {
+                    $(".m-bia2").unbind("mousemove");
+                });
+        })
+        </script>
+    </body>
+</html>

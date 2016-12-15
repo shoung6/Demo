@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title></title>
+        <style type="text/css">
+            .quanping {
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.1);
+                position: fixed;
+                top: 0;
+                left: 0;
+            }
+            
+            #imgBox {
+                width: 800px;
+                height: 600px;
+                background-color: rgba(0, 0, 0, 0.3);
+                overflow: hidden;
+                /*居中*/
+                position: absolute;
+                margin: auto;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                /*居中*/
+            }
+            
+            .ssxq1 {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                cursor: pointer;
+                z-index: 1000;
+                border-radius: 50%;
+            }
+            
+            .ssxq1:hover {
+                background: #999;
+            }
+            
+            #imgMain {
+                position: relative;
+                top: -600px;
+            }
+        </style>
+        <script src="js/jquery-1.8.3.min.js" type="text/javascript"></script>
+        <script type="text/javascript" language="javascript">
+            $(function() {
+                $("#imgMain").css("left", (800 - $("#imgMain").width()) / 2);
+                $("#imgMain").css("top", (600 - $("#imgMain").height()) / 2 - 600);
+                var event;
+                if ($.browser.mozilla) {
+                    event = "DOMMouseScroll";
+                } else {
+                    event = "mousewheel";
+                }
+                $("#divBlock").bind(event,
+                    function(e) {
+                        var evt = window.event || e;
+                        var newWidth;
+                        var newHeight;
+                        var newLeft;
+                        var newTop;
+                        var overHeight = $("#divBlock").height();
+                        if (evt.detail > 0 || evt.wheelDelta < 0) {
+                            newWidth = $("#imgMain").width() * (1 - 0.05);
+                            newHeight = $("#imgMain").height() * (1 - 0.05);
+                            newLeft = $("#imgMain").position().left + $("#imgMain").width() * 0.025;
+                            newTop = $("#imgMain").position().top + $("#imgMain").height() * 0.025 - overHeight;
+                        } else {
+                            newWidth = $("#imgMain").width() * (1 + 0.05);
+                            newHeight = $("#imgMain").height() * (1 + 0.05);
+                            newLeft = $("#imgMain").position().left - $("#imgMain").width() * 0.025;
+                            newTop = $("#imgMain").position().top - $("#imgMain").height() * 0.025 - overHeight;
+                        }
+
+                        $("#imgMain").css({
+                            left: newLeft + "px",
+                            top: newTop + "px"
+                        });
+                        $("#imgMain").width(newWidth);
+                        $("#imgMain").height(newHeight);
+                    }
+                );
+                $("#divBlock").bind("mousedown", function(e) {
+                    var xo = e.pageX;
+                    var yo = e.pageY;
+                    var imgLeft = $("#imgMain").position().left;
+                    var imgTop = $("#imgMain").position().top;
+                    var overHeight = $("#divBlock").height();
+                    $("#divBlock").bind("mousemove", function(e) {
+                        window.getSelection ? window.getSelection().removeAllRanges() : document.selection.empty();
+                        var xn = e.pageX;
+                        var yn = e.pageY;
+                        $("#imgMain").css("left", xn - xo + imgLeft);
+                        $("#imgMain").css("top", yn - yo - overHeight + imgTop);
+                    });
+
+                });
+                $("#divBlock").bind("mouseup mouseout", function() {
+                    $("#divBlock").unbind("mousemove");
+                });
+            });
+        </script>
+    </head>
+
+    <body>
+        <div class="quanping">
+            <div id="imgBox">
+                <div style="width: 800px; height: 600px; cursor: move; position: relative; left: 0;
+                top: 0; filter: alpha(opacity=0); opacity: 0; -moz-opacity: 0; background: blue;
+                z-index: 999;" id="divBlock">
+                </div>
+                <img src="img/2.jpg" height="600" alt="" id="imgMain" />
+                <img class="ssxq1" src="img/cha.png" alt="" />
+            </div>
+        </div>
+    </body>
+
+</html>
