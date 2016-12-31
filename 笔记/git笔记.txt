@@ -1,0 +1,10 @@
+代码提交github
+
+本地创建 ssh公钥
+github添加 公钥
+github创建仓库
+本地 bash cd入想要的目录 利用git clone 克隆远程库
+本地有修改
+git add .  添加所有修改
+git commit -m "写上注释"
+git push -u origin master
