@@ -9,10 +9,13 @@
 	</head>
 	<script>
 		//rem布局
+		(function rem(){
+		    document.documentElement.style.fontSize = ((document.documentElement.clientWidth / 750) * 100) + 'px';
+		})();
 		window.onresize = function(){
-			document.documentElement.style.fontSize = ((document.documentElement.clientWidth / 750) * 100) + 'px';
+			rem();
 		};
-		document.documentElement.style.fontSize = ((document.documentElement.clientWidth / 750) * 100) + 'px';
+		
 	</script>
 	<style>
 		/*一像素边框*/
@@ -32,6 +35,8 @@
 		(function($, doc) {
 		}(mui, document))
 			mui.init()
+			//滚动初始化
+			mui('.mui-scroll-wrapper').scroll({});
 				//ajax
 				var json_obj={"Photo":imageData};
 				app.ajax({
@@ -53,6 +58,8 @@
 				extras:{'group_id':group_id},
 				var this_page=plus.webview.currentWebview();
 				console.log(this_page.group_id);
+				//滚动初始化
+				mui('.mui-scroll-wrapper').scroll({});
 				//等待框
 				var waiting=plus.nativeUI.showWaiting("加载中");
 				plus.nativeUI.closeWaiting(waiting);
@@ -70,7 +77,7 @@
 			    	auto:true,
 			        contentrefresh : "正在加载...",//可选，正在加载状态时，上拉加载控件上显示的标题内容
 			        contentnomore:'没有更多数据了',//可选，请求完毕若没有更多数据时显示的提醒内容；
-			        callback :pullfresh//必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+			        callback :pullUp//必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
 			    }
 		    }
 		});

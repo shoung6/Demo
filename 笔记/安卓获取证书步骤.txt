@@ -1,0 +1,8 @@
+ctrl r  开cmd cd\到根目录 cd.返回上一级 cd文件夹名 定位到jdk bin目录 复制以下代码
+keytool -genkey -keystore yingyongming.keystore -keyalg RSA -validity 20000  -alias yingyongming.keystore
+把yingyongming改成app的名称
+装到手机用 GenSignature  得到签名
+包名格式：cn.iaapp.app.huizhuan
+签名格式：55f1202d28969a34a4c1335b128a337c
+
+
