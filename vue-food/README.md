@@ -1,6 +1,6 @@
 # Vue-food
 
-> Vue-food
+> vue2+vue-router+sass+webpack+es6+eslint
 
 ## 安装步骤
 
