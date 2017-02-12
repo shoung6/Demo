@@ -1,0 +1,14 @@
+<template>
+  <div class="">
+    ratings content
+  </div>
+</template>
+  
+<script type="text/ecmascript-6">
+  export default {}
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style lang="scss" scoped>
+  
+</style>

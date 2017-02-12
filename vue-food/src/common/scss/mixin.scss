@@ -1,0 +1,10 @@
+@mixin imgIcon($url){
+    display: inline-block;
+    vertical-align: top;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url($url + "@2x.png");
+    @media (-webkit-min-device-pixel-ratio: 3),(min-device-pixel-ratio: 3){
+        background-image: url($url + "@3x.png");
+    }
+}
