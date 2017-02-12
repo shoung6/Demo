@@ -1,8 +1,8 @@
-# sell
+# Vue-food
 
-> sell app
+> Vue-food
 
-## Build Setup
+## 安装步骤
 
 ``` bash
 # install dependencies
