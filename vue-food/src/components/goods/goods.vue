@@ -55,8 +55,9 @@
   import BScroll from 'better-scroll'
   import shopcart from 'components/shopcart/shopcart'
   import cartcontrol from 'components/cartcontrol/cartcontrol'
+  import appData from 'common/js/appData.js'
 
-  const ERR_OK = 0
+  // const ERR_OK = 0
   export default {
     data() {
       return {
@@ -191,15 +192,20 @@
       }
     },
     created() {
-      this.$http.get('/api/goods').then((response) => {
-        response = response.body
-        if (response.errno === ERR_OK) {
-          this.goods = response.data
-          this.$nextTick(() => {
-            this._initScroll()
-            this._calculateHeight()
-          })
-        }
+      // this.$http.get('/api/goods').then((response) => {
+      //   response = response.body
+      //   if (response.errno === ERR_OK) {
+      //     this.goods = response.data
+      //     this.$nextTick(() => {
+      //       this._initScroll()
+      //       this._calculateHeight()
+      //     })
+      //   }
+      // })
+      this.goods = appData.goods
+      this.$nextTick(() => {
+        this._initScroll()
+        this._calculateHeight()
       })
       this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee']
     },

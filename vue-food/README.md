@@ -1,8 +1,8 @@
-# Vue-food
+# sell
 
-> vue2+vue-router+sass+webpack+es6+eslint
+> sell app
 
-## 安装步骤
+## Build Setup
 
 ``` bash
 # install dependencies

@@ -18,8 +18,9 @@
   
 <script>
   import header from './components/header/header.vue'
+  import appData from 'common/js/appData.js'
   
-  const ERR_OK = 0
+  // const ERR_OK = 0
   export default {
     data() {
       return {
@@ -30,12 +31,13 @@
       'v-header': header
     },
     created() {
-      this.$http.get('/api/seller').then((response) => {
-        response = response.body
-        if (response.errno === ERR_OK) {
-          this.seller = response.data
-        }
-      })
+      this.seller = appData.seller
+      // this.$http.get('/api/seller').then((response) => {
+      //   response = response.body
+      //   if (response.errno === ERR_OK) {
+      //     this.seller = response.data
+      //   }
+      // })
     }
   }
 </script>
