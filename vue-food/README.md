@@ -1,4 +1,6 @@
-# sell
+# vue-food
+
+>vue2+vue-router+vue-resource+vue-cli+sass+webpack+es6+eslint
 
 > 在线演示地址：http://shoung.tk/Demo/vue-food/index.html#/goods 扫描二维码，可在手机中查看
 
