@@ -1,9 +1,8 @@
 # sell
 
-> 在线演示地址：http://shoung.tk/Demo/vue-food/index.html#/goods扫描二维码，可在手机中查看
-<div align=center>
+> 在线演示地址：http://shoung.tk/Demo/vue-food/index.html#/goods 扫描二维码，可在手机中查看
+
   ![](qr.png)
-</div>
 
 ## Build Setup
 
