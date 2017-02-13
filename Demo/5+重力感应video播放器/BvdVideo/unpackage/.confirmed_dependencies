@@ -1,0 +1,11 @@
+{
+  "index.html": {
+    "resources": [
+      "1.webm",
+      "js/mui.min.js",
+      "css/bvd.css",
+      "js/bvd.js",
+      "css/mui.min.css"
+    ]
+  }
+}
