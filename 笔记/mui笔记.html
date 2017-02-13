@@ -30,24 +30,86 @@
 	</style>
 
 	<body>
+    <link href="../css/mui.picker.min.css" rel="stylesheet" />
+    <script src="../js/mui.picker.min.js"></script>
 		<script src="../js/app.js"></script>
 		<script type="text/javascript">
 		(function($, doc) {
 		}(mui, document))
 			mui.init()
+                // confirm对话框
+                plus.nativeUI.confirm( "登录才能查看详情哦~", function(e){
+                    if (e.index==1) {
+                        app.openPage('login.html'); 
+                    }
+                }, "提示", ["取消","确认"] );
+            
+            //ajax
+            var waiting=plus.nativeUI.showWaiting();
+            var json_obj={
+                UID : window.localStorage.UID
+            };
+            app.ajax({
+                url:'',
+                data:json_obj,
+                callback:function(data){
+                    
+                    plus.nativeUI.closeWaiting(waiting);
+                },errorback:function(a){
+                    
+                    plus.nativeUI.closeWaiting(waiting);
+                }
+            });
+            
+                //返回首页即关闭所有非（首页及其子页面）
+                var ww = plus.webview.all();
+                var homePage = plus.webview.getLaunchWebview();
+                var pages=['tab_index.html', 'tab_nearby.html', 'tab_shopping_cart.html', 'tab_user_index.html'];
+                setTimeout(function(){
+                    for (var i in ww) {
+                        if (ww[i]!=homePage) {
+                            var flag=true;
+                            for (var j in pages) {
+                                if (ww[i]==plus.webview.getWebviewById(pages[j])) {
+                                    flag=false;
+                                }
+                            }
+                            if (flag) {
+                                ww[i].close();
+                            }
+                        }
+                    }
+                },10)
+                mui.fire(homePage,"goCart");
+                
+                
+			//选择器
+            var picker = new mui.PopPicker();
+            picker.setData([{value:'zz',text:'智子'}]);
+            picker.show(function (selectItems) {
+                console.log(selectItems[0].text);//智子
+                console.log(selectItems[0].value);//zz 
+            })
+			//日期选择
+            var dtPicker = new mui.DtPicker(); 
+            dtPicker.show(function (selectItems) {
+                console.log(selectItems.y);//{text: "2016",value: 2016}
+            })
+			//分享
+                document.querySelector(".j_share").addEventListener('tap', function() {
+                    var Share = {};
+                    Share.info={
+                      name:'专注科技分享',
+                      head_imge:"../img_test/head.jpg",
+                      introduce:'专注科技',
+                      href:'http://www.baidu.com'
+                    };
+                    wrhShare(Share);
+                });
+			
 			//滚动初始化
 			mui('.mui-scroll-wrapper').scroll({});
-				//ajax
-				var json_obj={"Photo":imageData};
-				app.ajax({
-					url:'App/User/user_edit',
-					data:json_obj,
-					callback:function(data){
-						console.log(JSON.stringify(data));
-						mui.toast("");
-					},errorback:function(a){
-					}
-				});
+
 				//触发别页面js
 				window.addEventListener('init', function() {
 					page_init();
@@ -63,72 +125,61 @@
 				//等待框
 				var waiting=plus.nativeUI.showWaiting("加载中");
 				plus.nativeUI.closeWaiting(waiting);
-						//小于10条，不显示加载更多
-						if(page_index==1&&data.length<10){
-							mui('.mui-content').pullRefresh().disablePullupToRefresh();
-						}
 			//全屏
 			plus.navigator.setFullscreen(true);
-		//上拉加载	
-		mui.init({
-			pullRefresh : {
-			    container:".mui-content",//待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
-			    up : {
-			    	auto:true,
-			        contentrefresh : "正在加载...",//可选，正在加载状态时，上拉加载控件上显示的标题内容
-			        contentnomore:'没有更多数据了',//可选，请求完毕若没有更多数据时显示的提醒内容；
-			        callback :pullUp//必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
-			    }
-		    }
-		});
-		function page_init(){//初始化
-			document.querySelector(".water-box").innerHTML='';
-			mui('.mui-content').pullRefresh().refresh(true);
-			page_index=1;
-			pullfresh();
-		}
-		window.addEventListener('init', function() {//供后面数据修改之后更新
-			page_init();
-		})
-	    function pullfresh(){
-			//ajax
-			var json_obj={"PageSize":10,"PageIndex":page_index};
-			console.log(JSON.stringify(json_obj));
-			app.ajax({
-				url:'App/User/user_money_record_list',
-				data:json_obj,
-				callback:function(data){
-					console.log(JSON.stringify(data));
-					if (data=="") {
-						mui('.mui-content').pullRefresh().endPullupToRefresh(true);
-					}else{
-						var list_wrap=document.querySelector(".water-box");
-						for (var i=0;i<data.length;i++) {
-							var new_div = document.createElement('div');
-							new_div.innerHTML="\
-							<div class='water-list'>\
-				    			<div class='head'>\
-				    				<span class='left'></span>\
-				    				<span class='right'></span>\
-				    			</div>\
-				    			<div class='fot'>"+data[i].AddTime+"</div>\
-				    		</div>";
-							list_wrap.appendChild(new_div);
-							var list_all=document.querySelectorAll(".water-list");
-							var list_last=list_all[list_all.length-1];
-						}
-	    				page_index++;
-						if (data.length<10) {
-							mui('.mui-content').pullRefresh().endPullupToRefresh(true);
-						}else{
-							mui('.mui-content').pullRefresh().endPullupToRefresh();
-						}
-					}
-				},errorback:function(a){
-					mui('.mui-content').pullRefresh().endPullupToRefresh();
-				}
-			});
-	    }
+        //上拉加载  
+        mui.init({
+            pullRefresh : {
+                container:".mui-content",
+                up : {
+                    contentnomore: '没有更多了',
+                    callback: pullUp,
+                    auto: true
+                }
+            }
+        });
+        var page_index=1;
+        function pullUp(){
+            console.log("上拉了");
+            //ajax
+            var json_obj={"UID": window.localStorage.UID,"PageSize":10,"PageIndex":page_index};
+            app.ajax({
+                url:'',
+                data:json_obj,
+                callback:function(data){
+                    for (var i=0; i<data.PageData.length; i++) {
+                        document.querySelector(".list-box").innerHTML+='\
+                            <div class="item-shop">\
+                                <div class="shop-title">'+data.PageData[i].Title+'</div>\
+                                <img src="'+data.PageData[i].Images+'"/>\
+                            </div>';
+                    }
+                    if(data.PageIndex>=data.PageCount){
+                        mui('.mui-content').pullRefresh().endPullupToRefresh(true);
+                    }else{
+                        mui('.mui-content').pullRefresh().endPullupToRefresh(false);
+                    }
+                    page_index++;
+                },errorback:function(a){
+                    mui('.mui-content').pullRefresh().endPullupToRefresh(false);
+                }
+            });
+        }
+        mui.plusReady(function () {
+            //供后面数据修改之后更新此页面
+            window.addEventListener('init', function() {
+                mui('.mui-content').pullRefresh().refresh(true);
+                page_index=1;
+                document.querySelector(".list-box").innerHTML='';
+                mui('.mui-content').pullRefresh().pullupLoading();
+            })
+        })
+            //初始化自动加载第一页
+//          setTimeout(function() {
+//              mui('.mui-content').pullRefresh().pullupLoading();
+//          }, 10);
+        
+        
 						//图片不留白100%
 						if (data.Photo!=="") {
 							head.src=data.Photo;
@@ -141,6 +192,7 @@
 							}
 						}
 		安卓的下拉刷新必须要有双webview才能起作用,上拉加载单webview能用但虽然有区域滚动的DOM但是没有效果,ios不加区域滚动的组件会无法加载刷新
+		checkbox添加tap事件有时候会不触发,要用click
 		</script>
 	</body>
 

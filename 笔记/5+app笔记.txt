@@ -3,6 +3,4 @@
 
 比较耗时的操作开始加上等待框，完成取消等待框
 
-webviewOBj.hide()方法会停止此页面的js执行
-plus.webview.hide(webviewObj)只是单纯的隐藏
 
