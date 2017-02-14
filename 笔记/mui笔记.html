@@ -142,7 +142,10 @@
         function pullUp(){
             console.log("上拉了");
             //ajax
-            var json_obj={"UID": window.localStorage.UID,"PageSize":10,"PageIndex":page_index};
+            var json_obj={UID : window.localStorage.UID,
+                PageSize : 10,
+                PageIndex : page_index
+            };
             app.ajax({
                 url:'',
                 data:json_obj,
