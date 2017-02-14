@@ -47,17 +47,17 @@
             //ajax
             var waiting=plus.nativeUI.showWaiting();
             var json_obj={
-                UID : window.localStorage.UID
+                UID: window.localStorage.UID
             };
             app.ajax({
                 url:'',
                 data:json_obj,
                 callback:function(data){
                     
-                    plus.nativeUI.closeWaiting(waiting);
+                    waiting.close(); 
                 },errorback:function(a){
                     
-                    plus.nativeUI.closeWaiting(waiting);
+                    waiting.close();
                 }
             });
             
@@ -124,7 +124,7 @@
 				mui('.mui-scroll-wrapper').scroll({});
 				//等待框
 				var waiting=plus.nativeUI.showWaiting("加载中");
-				plus.nativeUI.closeWaiting(waiting);
+				waiting.close();
 			//全屏
 			plus.navigator.setFullscreen(true);
         //上拉加载  
@@ -142,9 +142,10 @@
         function pullUp(){
             console.log("上拉了");
             //ajax
-            var json_obj={UID : window.localStorage.UID,
-                PageSize : 10,
-                PageIndex : page_index
+            var json_obj={
+                UID: window.localStorage.UID,
+                PageSize: 10,
+                PageIndex: page_index
             };
             app.ajax({
                 url:'',
